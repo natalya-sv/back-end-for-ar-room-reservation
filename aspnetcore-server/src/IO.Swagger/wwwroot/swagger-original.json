@@ -1,0 +1,2139 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Room Reservation API",
+    "description" : "A Simple IP Address API",
+    "version" : "0.1.9"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:5000/api"
+  } ],
+  "paths" : {
+    "/meetingRooms" : {
+      "get" : {
+        "tags" : [ "meeting room" ],
+        "summary" : "Returns a list of rooms",
+        "responses" : {
+          "200" : {
+            "description" : "An array of meeting rooms",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/MeetingRoom"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Rooms not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "meeting room" ],
+        "summary" : "Creates a new room",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MeetingRoom"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MeetingRoom"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Conflict"
+          }
+        }
+      }
+    },
+    "/meetingRooms/{meetingRoomId}" : {
+      "get" : {
+        "tags" : [ "meeting room" ],
+        "summary" : "Returns a meeting room by meetingRoomId",
+        "parameters" : [ {
+          "name" : "meetingRoomId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MeetingRoom"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Room not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "meeting room" ],
+        "summary" : "Updates an existing room",
+        "parameters" : [ {
+          "name" : "meetingRoomId",
+          "in" : "path",
+          "description" : "ID of a meeting room",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MeetingRoom"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "404" : {
+            "description" : "Room not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "meeting room" ],
+        "summary" : "Deletes a room",
+        "parameters" : [ {
+          "name" : "meetingRoomId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Deleted"
+          },
+          "404" : {
+            "description" : "Room not found"
+          }
+        }
+      }
+    },
+    "/meetingRooms/image/{imageName}" : {
+      "get" : {
+        "tags" : [ "meeting room" ],
+        "summary" : "Returns room by an image name",
+        "parameters" : [ {
+          "name" : "imageName",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A room object",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MeetingRoom"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Room not found"
+          }
+        }
+      }
+    },
+    "/reservations" : {
+      "post" : {
+        "tags" : [ "reservations" ],
+        "summary" : "Creates a new reservation",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MeetingRoomReservation"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MeetingRoomReservation"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Conflict"
+          }
+        }
+      }
+    },
+    "/reservations/{reservationId}" : {
+      "get" : {
+        "tags" : [ "reservations" ],
+        "summary" : "Returns reservation by ID",
+        "parameters" : [ {
+          "name" : "reservationId",
+          "in" : "path",
+          "description" : "ID of a reservation",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MeetingRoomReservation"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Reservation not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "reservations" ],
+        "summary" : "Updates an existing reservation",
+        "parameters" : [ {
+          "name" : "reservationId",
+          "in" : "path",
+          "description" : "ID of a reservation",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MeetingRoomReservation"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Updated"
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "Room not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "reservations" ],
+        "summary" : "Deletes a reservation",
+        "parameters" : [ {
+          "name" : "reservationId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Deleted"
+          },
+          "404" : {
+            "description" : "Reservation not found"
+          }
+        }
+      }
+    },
+    "/users" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "Returns a list of users",
+        "responses" : {
+          "200" : {
+            "description" : "An array of users",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/User"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "User not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "Creates a new user",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Conflict"
+          }
+        }
+      }
+    },
+    "/users/{userId}" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "Returns user by ID",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "ID of a user",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "User not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "users" ],
+        "summary" : "Updates an existing user",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "ID of a user",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "404" : {
+            "description" : "User not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "users" ],
+        "summary" : "Deletes a user",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Deleted"
+          },
+          "404" : {
+            "description" : "User not found"
+          }
+        }
+      }
+    },
+    "/users/email/{userEmail}" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "Returns user by email",
+        "parameters" : [ {
+          "name" : "userEmail",
+          "in" : "path",
+          "description" : "email of a user",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "User not found"
+          }
+        }
+      }
+    },
+    "/users/email/{userEmail}/password/{password}" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "Returns user by email and passw",
+        "parameters" : [ {
+          "name" : "userEmail",
+          "in" : "path",
+          "description" : "email of a user",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "password",
+          "in" : "path",
+          "description" : "password of a user",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "User not found"
+          }
+        }
+      }
+    },
+    "/meetingRoomImage" : {
+      "post" : {
+        "tags" : [ "meeting room image" ],
+        "summary" : "Creates a new image",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MeetingRoomImage"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MeetingRoomImage"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Conflict"
+          }
+        }
+      }
+    },
+    "/meetingRoomImage/{imageName}" : {
+      "get" : {
+        "tags" : [ "meeting room image" ],
+        "summary" : "Returns meeting room Image by imagename",
+        "parameters" : [ {
+          "name" : "imageName",
+          "in" : "path",
+          "description" : "imagename of a meetingRoomImage",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MeetingRoomImage"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Meeting Room Image not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "meeting room image" ],
+        "summary" : "Update an existing room",
+        "parameters" : [ {
+          "name" : "imageName",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MeetingRoomImage"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "404" : {
+            "description" : "Room not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "meeting room image" ],
+        "summary" : "Deletes a room",
+        "parameters" : [ {
+          "name" : "imageName",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Deleted"
+          },
+          "404" : {
+            "description" : "RoomImage not found"
+          }
+        }
+      }
+    },
+    "/cities" : {
+      "get" : {
+        "tags" : [ "city" ],
+        "summary" : "Returns a list of cities",
+        "responses" : {
+          "200" : {
+            "description" : "A json array of cities",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/City"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Cities not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "city" ],
+        "summary" : "Creates a new city",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/City"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/City"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Conflict"
+          }
+        }
+      }
+    },
+    "/cities/{cityId}" : {
+      "get" : {
+        "tags" : [ "city" ],
+        "summary" : "Returns a city by ID",
+        "parameters" : [ {
+          "name" : "cityId",
+          "in" : "path",
+          "description" : "ID of a city",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/City"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "City not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "city" ],
+        "summary" : "Update an existing room",
+        "parameters" : [ {
+          "name" : "cityId",
+          "in" : "path",
+          "description" : "ID of a city",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/City"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "404" : {
+            "description" : "City not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "city" ],
+        "summary" : "Deletes a city",
+        "parameters" : [ {
+          "name" : "cityId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Deleted"
+          },
+          "404" : {
+            "description" : "City not found"
+          }
+        }
+      }
+    },
+    "/jobs" : {
+      "get" : {
+        "tags" : [ "job" ],
+        "summary" : "Returns a list of jobs",
+        "responses" : {
+          "200" : {
+            "description" : "An array of jobs",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Job"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Jobs not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "job" ],
+        "summary" : "Creates a new job",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Job"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Conflict"
+          }
+        }
+      }
+    },
+    "/jobs/{jobId}" : {
+      "get" : {
+        "tags" : [ "job" ],
+        "summary" : "Returns a job by ID",
+        "parameters" : [ {
+          "name" : "jobId",
+          "in" : "path",
+          "description" : "ID of a job",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Job not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "job" ],
+        "summary" : "Update an existing job",
+        "parameters" : [ {
+          "name" : "jobId",
+          "in" : "path",
+          "description" : "ID of a job",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Job"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "Job not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "job" ],
+        "summary" : "Deletes a job",
+        "parameters" : [ {
+          "name" : "jobId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Deleted"
+          },
+          "404" : {
+            "description" : "Job not found"
+          }
+        }
+      }
+    },
+    "/locations" : {
+      "get" : {
+        "tags" : [ "location" ],
+        "summary" : "Returns a list of locations",
+        "responses" : {
+          "200" : {
+            "description" : "A json array locations",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Location"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Location not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "location" ],
+        "summary" : "Creates a new location",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Location"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Location"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Conflict"
+          }
+        }
+      }
+    },
+    "/locations/{locationId}" : {
+      "get" : {
+        "tags" : [ "location" ],
+        "summary" : "Returns location  by ID",
+        "parameters" : [ {
+          "name" : "locationId",
+          "in" : "path",
+          "description" : "ID of a location",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Location"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Location not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "location" ],
+        "summary" : "Updates an existing location",
+        "parameters" : [ {
+          "name" : "locationId",
+          "in" : "path",
+          "description" : "ID of a location",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Location"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "404" : {
+            "description" : "Location not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "location" ],
+        "summary" : "Deletes a job",
+        "parameters" : [ {
+          "name" : "locationId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Deleted"
+          },
+          "404" : {
+            "description" : "Location not found"
+          }
+        }
+      }
+    },
+    "/workingSpots" : {
+      "get" : {
+        "tags" : [ "workingSpot" ],
+        "summary" : "Returns a list of workingSpot",
+        "responses" : {
+          "200" : {
+            "description" : "An array workingSpot",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/WorkingSpot"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Working Spot not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "workingSpot" ],
+        "summary" : "Creates a new workingSpot",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/WorkingSpot"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/WorkingSpot"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Conflict"
+          }
+        }
+      }
+    },
+    "/workingSpots/{workingSpotId}" : {
+      "get" : {
+        "tags" : [ "workingSpot" ],
+        "summary" : "Returns a WorkingSpot info by ID",
+        "parameters" : [ {
+          "name" : "workingSpotId",
+          "in" : "path",
+          "description" : "ID of a workingSpot",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/WorkingSpot"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "WorkingSpot not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "workingSpot" ],
+        "summary" : "Updates an existing workingSpot",
+        "parameters" : [ {
+          "name" : "workingSpotId",
+          "in" : "path",
+          "description" : "ID of a workingSpot",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/WorkingSpot"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "404" : {
+            "description" : "WorkingSpot not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "workingSpot" ],
+        "summary" : "Deletes a workingSpot",
+        "parameters" : [ {
+          "name" : "workingSpotId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Deleted"
+          },
+          "404" : {
+            "description" : "WorkingSpot not found"
+          }
+        }
+      }
+    },
+    "/workingSpotReservations" : {
+      "get" : {
+        "tags" : [ "workingSpotReservations" ],
+        "summary" : "Returns a list of workingSpotReservation",
+        "responses" : {
+          "200" : {
+            "description" : "An array of workingSpotReservations",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/WorkingSpotReservation"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "WorkingSpot Reservations not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "workingSpotReservations" ],
+        "summary" : "Creates a new workingSpotReservation",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/WorkingSpotReservation"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/WorkingSpotReservation"
+                }
+              }
+            }
+          },
+          "409" : {
+            "description" : "Conflict"
+          }
+        }
+      }
+    },
+    "/workingSpotsreservations/{workingSpotReservationId}" : {
+      "get" : {
+        "tags" : [ "workingSpotReservations" ],
+        "summary" : "Returns a WorkingSpotReservation info by ID",
+        "parameters" : [ {
+          "name" : "workingSpotReservationId",
+          "in" : "path",
+          "description" : "ID of a workingSpotReservation",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/WorkingSpotReservation"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "WorkingSpotReservation not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "workingSpotReservations" ],
+        "summary" : "Update an existing workingSpot",
+        "parameters" : [ {
+          "name" : "workingSpotReservationId",
+          "in" : "path",
+          "description" : "ID of a workingSpotReservation",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/WorkingSpotReservation"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "Updated"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "404" : {
+            "description" : "WorkingSpotReservation not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "workingSpotReservation" ],
+        "summary" : "Deletes a workingSpotReservation",
+        "parameters" : [ {
+          "name" : "workingSpotReservationId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Deleted"
+          },
+          "404" : {
+            "description" : "WorkingSpotReservation not found"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "MeetingRoom" : {
+        "type" : "object",
+        "properties" : {
+          "meetingRoomId" : {
+            "type" : "integer",
+            "readOnly" : true
+          },
+          "meetingRoomName" : {
+            "type" : "string"
+          },
+          "meetingRoomEmail" : {
+            "type" : "string",
+            "format" : "email"
+          },
+          "meetingRoomLocation" : {
+            "$ref" : "#/components/schemas/Location"
+          },
+          "locationId" : {
+            "type" : "integer"
+          },
+          "meetingRoomImage" : {
+            "$ref" : "#/components/schemas/MeetingRoomImage"
+          },
+          "meetingRoomReservations" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/MeetingRoomReservation"
+            }
+          }
+        },
+        "example" : {
+          "meetingRoomLocation" : {
+            "meetingRooms" : [ null, null ],
+            "city" : {
+              "cityName" : "cityName",
+              "cityId" : 1
+            },
+            "locationId" : 6,
+            "workingSpots" : [ {
+              "workingSpotId" : 5,
+              "locationId" : 5,
+              "location" : null,
+              "workingSpotReservations" : [ {
+                "workingSpotId" : 7,
+                "workingSpot" : null,
+                "workingSpotReservationId" : 2,
+                "reservationDate" : "2000-01-23",
+                "user" : {
+                  "jobId" : 2,
+                  "password" : "",
+                  "reservations" : [ {
+                    "meetingRoom" : null,
+                    "meetingRoomReservationId" : 4,
+                    "meetingRoomId" : 1,
+                    "meetingDate" : "2000-01-23",
+                    "startTime" : "startTime",
+                    "endTime" : "endTime",
+                    "meetingTopic" : "meetingTopic",
+                    "user" : null,
+                    "userId" : 7
+                  }, {
+                    "meetingRoom" : null,
+                    "meetingRoomReservationId" : 4,
+                    "meetingRoomId" : 1,
+                    "meetingDate" : "2000-01-23",
+                    "startTime" : "startTime",
+                    "endTime" : "endTime",
+                    "meetingTopic" : "meetingTopic",
+                    "user" : null,
+                    "userId" : 7
+                  } ],
+                  "surname" : "surname",
+                  "name" : "name",
+                  "job" : {
+                    "jobId" : 3,
+                    "jobTitle" : "jobTitle"
+                  },
+                  "userId" : 9,
+                  "email" : ""
+                },
+                "userId" : 1
+              }, {
+                "workingSpotId" : 7,
+                "workingSpot" : null,
+                "workingSpotReservationId" : 2,
+                "reservationDate" : "2000-01-23",
+                "user" : {
+                  "jobId" : 2,
+                  "password" : "",
+                  "reservations" : [ {
+                    "meetingRoom" : null,
+                    "meetingRoomReservationId" : 4,
+                    "meetingRoomId" : 1,
+                    "meetingDate" : "2000-01-23",
+                    "startTime" : "startTime",
+                    "endTime" : "endTime",
+                    "meetingTopic" : "meetingTopic",
+                    "user" : null,
+                    "userId" : 7
+                  }, {
+                    "meetingRoom" : null,
+                    "meetingRoomReservationId" : 4,
+                    "meetingRoomId" : 1,
+                    "meetingDate" : "2000-01-23",
+                    "startTime" : "startTime",
+                    "endTime" : "endTime",
+                    "meetingTopic" : "meetingTopic",
+                    "user" : null,
+                    "userId" : 7
+                  } ],
+                  "surname" : "surname",
+                  "name" : "name",
+                  "job" : {
+                    "jobId" : 3,
+                    "jobTitle" : "jobTitle"
+                  },
+                  "userId" : 9,
+                  "email" : ""
+                },
+                "userId" : 1
+              } ]
+            }, {
+              "workingSpotId" : 5,
+              "locationId" : 5,
+              "location" : null,
+              "workingSpotReservations" : [ {
+                "workingSpotId" : 7,
+                "workingSpot" : null,
+                "workingSpotReservationId" : 2,
+                "reservationDate" : "2000-01-23",
+                "user" : {
+                  "jobId" : 2,
+                  "password" : "",
+                  "reservations" : [ {
+                    "meetingRoom" : null,
+                    "meetingRoomReservationId" : 4,
+                    "meetingRoomId" : 1,
+                    "meetingDate" : "2000-01-23",
+                    "startTime" : "startTime",
+                    "endTime" : "endTime",
+                    "meetingTopic" : "meetingTopic",
+                    "user" : null,
+                    "userId" : 7
+                  }, {
+                    "meetingRoom" : null,
+                    "meetingRoomReservationId" : 4,
+                    "meetingRoomId" : 1,
+                    "meetingDate" : "2000-01-23",
+                    "startTime" : "startTime",
+                    "endTime" : "endTime",
+                    "meetingTopic" : "meetingTopic",
+                    "user" : null,
+                    "userId" : 7
+                  } ],
+                  "surname" : "surname",
+                  "name" : "name",
+                  "job" : {
+                    "jobId" : 3,
+                    "jobTitle" : "jobTitle"
+                  },
+                  "userId" : 9,
+                  "email" : ""
+                },
+                "userId" : 1
+              }, {
+                "workingSpotId" : 7,
+                "workingSpot" : null,
+                "workingSpotReservationId" : 2,
+                "reservationDate" : "2000-01-23",
+                "user" : {
+                  "jobId" : 2,
+                  "password" : "",
+                  "reservations" : [ {
+                    "meetingRoom" : null,
+                    "meetingRoomReservationId" : 4,
+                    "meetingRoomId" : 1,
+                    "meetingDate" : "2000-01-23",
+                    "startTime" : "startTime",
+                    "endTime" : "endTime",
+                    "meetingTopic" : "meetingTopic",
+                    "user" : null,
+                    "userId" : 7
+                  }, {
+                    "meetingRoom" : null,
+                    "meetingRoomReservationId" : 4,
+                    "meetingRoomId" : 1,
+                    "meetingDate" : "2000-01-23",
+                    "startTime" : "startTime",
+                    "endTime" : "endTime",
+                    "meetingTopic" : "meetingTopic",
+                    "user" : null,
+                    "userId" : 7
+                  } ],
+                  "surname" : "surname",
+                  "name" : "name",
+                  "job" : {
+                    "jobId" : 3,
+                    "jobTitle" : "jobTitle"
+                  },
+                  "userId" : 9,
+                  "email" : ""
+                },
+                "userId" : 1
+              } ]
+            } ]
+          },
+          "meetingRoomId" : 0,
+          "meetingRoomName" : "meetingRoomName",
+          "locationId" : 1,
+          "meetingRoomImage" : {
+            "imageWidth" : 7.457744773683766,
+            "image" : "",
+            "meetingRoom" : null,
+            "meetingRoomId" : 1,
+            "name" : "name",
+            "meetingRoomImageId" : 6
+          },
+          "meetingRoomReservations" : [ null, null ],
+          "meetingRoomEmail" : ""
+        }
+      },
+      "MeetingRoomReservation" : {
+        "type" : "object",
+        "properties" : {
+          "meetingRoomReservationId" : {
+            "type" : "integer",
+            "readOnly" : true
+          },
+          "meetingDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "startTime" : {
+            "type" : "string",
+            "format" : "time"
+          },
+          "endTime" : {
+            "type" : "string",
+            "format" : "time"
+          },
+          "meetingTopic" : {
+            "type" : "string"
+          },
+          "user" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "userId" : {
+            "type" : "integer"
+          },
+          "meetingRoom" : {
+            "$ref" : "#/components/schemas/MeetingRoom"
+          },
+          "meetingRoomId" : {
+            "type" : "integer"
+          }
+        },
+        "example" : {
+          "meetingRoom" : null,
+          "meetingRoomReservationId" : 4,
+          "meetingRoomId" : 1,
+          "meetingDate" : "2000-01-23",
+          "startTime" : "startTime",
+          "endTime" : "endTime",
+          "meetingTopic" : "meetingTopic",
+          "user" : null,
+          "userId" : 7
+        }
+      },
+      "User" : {
+        "type" : "object",
+        "properties" : {
+          "userId" : {
+            "type" : "integer",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "surname" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email"
+          },
+          "password" : {
+            "type" : "string",
+            "format" : "password"
+          },
+          "job" : {
+            "$ref" : "#/components/schemas/Job"
+          },
+          "jobId" : {
+            "type" : "integer"
+          },
+          "reservations" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/MeetingRoomReservation"
+            }
+          }
+        },
+        "example" : {
+          "jobId" : 2,
+          "password" : "",
+          "reservations" : [ {
+            "meetingRoom" : null,
+            "meetingRoomReservationId" : 4,
+            "meetingRoomId" : 1,
+            "meetingDate" : "2000-01-23",
+            "startTime" : "startTime",
+            "endTime" : "endTime",
+            "meetingTopic" : "meetingTopic",
+            "user" : null,
+            "userId" : 7
+          }, {
+            "meetingRoom" : null,
+            "meetingRoomReservationId" : 4,
+            "meetingRoomId" : 1,
+            "meetingDate" : "2000-01-23",
+            "startTime" : "startTime",
+            "endTime" : "endTime",
+            "meetingTopic" : "meetingTopic",
+            "user" : null,
+            "userId" : 7
+          } ],
+          "surname" : "surname",
+          "name" : "name",
+          "job" : {
+            "jobId" : 3,
+            "jobTitle" : "jobTitle"
+          },
+          "userId" : 9,
+          "email" : ""
+        }
+      },
+      "MeetingRoomImage" : {
+        "type" : "object",
+        "properties" : {
+          "meetingRoomImageId" : {
+            "type" : "integer",
+            "readOnly" : true
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "image" : {
+            "type" : "string",
+            "format" : "byte"
+          },
+          "imageWidth" : {
+            "type" : "number"
+          },
+          "meetingRoomId" : {
+            "type" : "integer"
+          },
+          "meetingRoom" : {
+            "$ref" : "#/components/schemas/MeetingRoom"
+          }
+        },
+        "example" : {
+          "imageWidth" : 7.457744773683766,
+          "image" : "",
+          "meetingRoom" : null,
+          "meetingRoomId" : 1,
+          "name" : "name",
+          "meetingRoomImageId" : 6
+        }
+      },
+      "City" : {
+        "type" : "object",
+        "properties" : {
+          "cityId" : {
+            "type" : "integer",
+            "readOnly" : true
+          },
+          "cityName" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "cityName" : "cityName",
+          "cityId" : 1
+        }
+      },
+      "Job" : {
+        "type" : "object",
+        "properties" : {
+          "jobId" : {
+            "type" : "integer"
+          },
+          "jobTitle" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "jobId" : 3,
+          "jobTitle" : "jobTitle"
+        }
+      },
+      "Location" : {
+        "type" : "object",
+        "properties" : {
+          "locationId" : {
+            "type" : "integer"
+          },
+          "city" : {
+            "$ref" : "#/components/schemas/City"
+          },
+          "meetingRooms" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/MeetingRoom"
+            }
+          },
+          "workingSpots" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/WorkingSpot"
+            }
+          }
+        },
+        "example" : {
+          "meetingRooms" : [ null, null ],
+          "city" : {
+            "cityName" : "cityName",
+            "cityId" : 1
+          },
+          "locationId" : 6,
+          "workingSpots" : [ {
+            "workingSpotId" : 5,
+            "locationId" : 5,
+            "location" : null,
+            "workingSpotReservations" : [ {
+              "workingSpotId" : 7,
+              "workingSpot" : null,
+              "workingSpotReservationId" : 2,
+              "reservationDate" : "2000-01-23",
+              "user" : {
+                "jobId" : 2,
+                "password" : "",
+                "reservations" : [ {
+                  "meetingRoom" : null,
+                  "meetingRoomReservationId" : 4,
+                  "meetingRoomId" : 1,
+                  "meetingDate" : "2000-01-23",
+                  "startTime" : "startTime",
+                  "endTime" : "endTime",
+                  "meetingTopic" : "meetingTopic",
+                  "user" : null,
+                  "userId" : 7
+                }, {
+                  "meetingRoom" : null,
+                  "meetingRoomReservationId" : 4,
+                  "meetingRoomId" : 1,
+                  "meetingDate" : "2000-01-23",
+                  "startTime" : "startTime",
+                  "endTime" : "endTime",
+                  "meetingTopic" : "meetingTopic",
+                  "user" : null,
+                  "userId" : 7
+                } ],
+                "surname" : "surname",
+                "name" : "name",
+                "job" : {
+                  "jobId" : 3,
+                  "jobTitle" : "jobTitle"
+                },
+                "userId" : 9,
+                "email" : ""
+              },
+              "userId" : 1
+            }, {
+              "workingSpotId" : 7,
+              "workingSpot" : null,
+              "workingSpotReservationId" : 2,
+              "reservationDate" : "2000-01-23",
+              "user" : {
+                "jobId" : 2,
+                "password" : "",
+                "reservations" : [ {
+                  "meetingRoom" : null,
+                  "meetingRoomReservationId" : 4,
+                  "meetingRoomId" : 1,
+                  "meetingDate" : "2000-01-23",
+                  "startTime" : "startTime",
+                  "endTime" : "endTime",
+                  "meetingTopic" : "meetingTopic",
+                  "user" : null,
+                  "userId" : 7
+                }, {
+                  "meetingRoom" : null,
+                  "meetingRoomReservationId" : 4,
+                  "meetingRoomId" : 1,
+                  "meetingDate" : "2000-01-23",
+                  "startTime" : "startTime",
+                  "endTime" : "endTime",
+                  "meetingTopic" : "meetingTopic",
+                  "user" : null,
+                  "userId" : 7
+                } ],
+                "surname" : "surname",
+                "name" : "name",
+                "job" : {
+                  "jobId" : 3,
+                  "jobTitle" : "jobTitle"
+                },
+                "userId" : 9,
+                "email" : ""
+              },
+              "userId" : 1
+            } ]
+          }, {
+            "workingSpotId" : 5,
+            "locationId" : 5,
+            "location" : null,
+            "workingSpotReservations" : [ {
+              "workingSpotId" : 7,
+              "workingSpot" : null,
+              "workingSpotReservationId" : 2,
+              "reservationDate" : "2000-01-23",
+              "user" : {
+                "jobId" : 2,
+                "password" : "",
+                "reservations" : [ {
+                  "meetingRoom" : null,
+                  "meetingRoomReservationId" : 4,
+                  "meetingRoomId" : 1,
+                  "meetingDate" : "2000-01-23",
+                  "startTime" : "startTime",
+                  "endTime" : "endTime",
+                  "meetingTopic" : "meetingTopic",
+                  "user" : null,
+                  "userId" : 7
+                }, {
+                  "meetingRoom" : null,
+                  "meetingRoomReservationId" : 4,
+                  "meetingRoomId" : 1,
+                  "meetingDate" : "2000-01-23",
+                  "startTime" : "startTime",
+                  "endTime" : "endTime",
+                  "meetingTopic" : "meetingTopic",
+                  "user" : null,
+                  "userId" : 7
+                } ],
+                "surname" : "surname",
+                "name" : "name",
+                "job" : {
+                  "jobId" : 3,
+                  "jobTitle" : "jobTitle"
+                },
+                "userId" : 9,
+                "email" : ""
+              },
+              "userId" : 1
+            }, {
+              "workingSpotId" : 7,
+              "workingSpot" : null,
+              "workingSpotReservationId" : 2,
+              "reservationDate" : "2000-01-23",
+              "user" : {
+                "jobId" : 2,
+                "password" : "",
+                "reservations" : [ {
+                  "meetingRoom" : null,
+                  "meetingRoomReservationId" : 4,
+                  "meetingRoomId" : 1,
+                  "meetingDate" : "2000-01-23",
+                  "startTime" : "startTime",
+                  "endTime" : "endTime",
+                  "meetingTopic" : "meetingTopic",
+                  "user" : null,
+                  "userId" : 7
+                }, {
+                  "meetingRoom" : null,
+                  "meetingRoomReservationId" : 4,
+                  "meetingRoomId" : 1,
+                  "meetingDate" : "2000-01-23",
+                  "startTime" : "startTime",
+                  "endTime" : "endTime",
+                  "meetingTopic" : "meetingTopic",
+                  "user" : null,
+                  "userId" : 7
+                } ],
+                "surname" : "surname",
+                "name" : "name",
+                "job" : {
+                  "jobId" : 3,
+                  "jobTitle" : "jobTitle"
+                },
+                "userId" : 9,
+                "email" : ""
+              },
+              "userId" : 1
+            } ]
+          } ]
+        }
+      },
+      "WorkingSpot" : {
+        "type" : "object",
+        "properties" : {
+          "workingSpotId" : {
+            "type" : "integer",
+            "readOnly" : true
+          },
+          "locationId" : {
+            "type" : "integer"
+          },
+          "location" : {
+            "$ref" : "#/components/schemas/Location"
+          },
+          "workingSpotReservations" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/WorkingSpotReservation"
+            }
+          }
+        },
+        "example" : {
+          "workingSpotId" : 5,
+          "locationId" : 5,
+          "location" : null,
+          "workingSpotReservations" : [ {
+            "workingSpotId" : 7,
+            "workingSpot" : null,
+            "workingSpotReservationId" : 2,
+            "reservationDate" : "2000-01-23",
+            "user" : {
+              "jobId" : 2,
+              "password" : "",
+              "reservations" : [ {
+                "meetingRoom" : null,
+                "meetingRoomReservationId" : 4,
+                "meetingRoomId" : 1,
+                "meetingDate" : "2000-01-23",
+                "startTime" : "startTime",
+                "endTime" : "endTime",
+                "meetingTopic" : "meetingTopic",
+                "user" : null,
+                "userId" : 7
+              }, {
+                "meetingRoom" : null,
+                "meetingRoomReservationId" : 4,
+                "meetingRoomId" : 1,
+                "meetingDate" : "2000-01-23",
+                "startTime" : "startTime",
+                "endTime" : "endTime",
+                "meetingTopic" : "meetingTopic",
+                "user" : null,
+                "userId" : 7
+              } ],
+              "surname" : "surname",
+              "name" : "name",
+              "job" : {
+                "jobId" : 3,
+                "jobTitle" : "jobTitle"
+              },
+              "userId" : 9,
+              "email" : ""
+            },
+            "userId" : 1
+          }, {
+            "workingSpotId" : 7,
+            "workingSpot" : null,
+            "workingSpotReservationId" : 2,
+            "reservationDate" : "2000-01-23",
+            "user" : {
+              "jobId" : 2,
+              "password" : "",
+              "reservations" : [ {
+                "meetingRoom" : null,
+                "meetingRoomReservationId" : 4,
+                "meetingRoomId" : 1,
+                "meetingDate" : "2000-01-23",
+                "startTime" : "startTime",
+                "endTime" : "endTime",
+                "meetingTopic" : "meetingTopic",
+                "user" : null,
+                "userId" : 7
+              }, {
+                "meetingRoom" : null,
+                "meetingRoomReservationId" : 4,
+                "meetingRoomId" : 1,
+                "meetingDate" : "2000-01-23",
+                "startTime" : "startTime",
+                "endTime" : "endTime",
+                "meetingTopic" : "meetingTopic",
+                "user" : null,
+                "userId" : 7
+              } ],
+              "surname" : "surname",
+              "name" : "name",
+              "job" : {
+                "jobId" : 3,
+                "jobTitle" : "jobTitle"
+              },
+              "userId" : 9,
+              "email" : ""
+            },
+            "userId" : 1
+          } ]
+        }
+      },
+      "WorkingSpotReservation" : {
+        "type" : "object",
+        "properties" : {
+          "workingSpotReservationId" : {
+            "type" : "integer",
+            "readOnly" : true
+          },
+          "reservationDate" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "workingSpotId" : {
+            "type" : "integer"
+          },
+          "workingSpot" : {
+            "$ref" : "#/components/schemas/WorkingSpot"
+          },
+          "user" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "userId" : {
+            "type" : "integer"
+          }
+        },
+        "example" : {
+          "workingSpotId" : 7,
+          "workingSpot" : null,
+          "workingSpotReservationId" : 2,
+          "reservationDate" : "2000-01-23",
+          "user" : {
+            "jobId" : 2,
+            "password" : "",
+            "reservations" : [ {
+              "meetingRoom" : null,
+              "meetingRoomReservationId" : 4,
+              "meetingRoomId" : 1,
+              "meetingDate" : "2000-01-23",
+              "startTime" : "startTime",
+              "endTime" : "endTime",
+              "meetingTopic" : "meetingTopic",
+              "user" : null,
+              "userId" : 7
+            }, {
+              "meetingRoom" : null,
+              "meetingRoomReservationId" : 4,
+              "meetingRoomId" : 1,
+              "meetingDate" : "2000-01-23",
+              "startTime" : "startTime",
+              "endTime" : "endTime",
+              "meetingTopic" : "meetingTopic",
+              "user" : null,
+              "userId" : 7
+            } ],
+            "surname" : "surname",
+            "name" : "name",
+            "job" : {
+              "jobId" : 3,
+              "jobTitle" : "jobTitle"
+            },
+            "userId" : 9,
+            "email" : ""
+          },
+          "userId" : 1
+        }
+      }
+    }
+  }
+}
